@@ -1,0 +1,251 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="user.master.cs" Inherits="user_user" %>
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-type" content="text/html" charset="UTF-8" />
+    <title>e-Shop </title>
+
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+   
+    <link rel="Stylesheet" type="text/css" href="css/style.css" media="all" />
+     <link rel="Stylesheet" type="text/css" href="css/merjemcss.css" media="all" />
+
+    <!--[if lte IE 6]><link rel="stylesheet" href="css/ie6.css" type="text/css" media="all" /><![endif]-->
+    <script src="js/jquery-1.4.1.min.js" type="text/javascript"></script>
+    <script src="js/jquery.jcarousel.pack.js" type="text/javascript"></script>
+    <script src="js/jquery-func.js" type="text/javascript"></script>
+</head>
+<body>
+    <form id="f1" runat="server">
+        <!-- Shell -->
+        <div class="shell">
+            <!-- Header -->
+            <div id="header">
+         
+     
+                <!-- Cart -->
+                <div id="cart">
+                    <%--<br />--%>
+                    <a style="font-size:13px;" href="../view_cart.aspx" class="cart-link fa fa-shopping-cart"  >  Your Shopping Cart</a>
+                    <br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span>Articles: <asp:label ID="totitem" runat="server" Text="0"></asp:label></span> 
+                    &nbsp;&nbsp; <span>Cost:$<asp:label ID="totprice" runat="server" Text="0"></asp:label></span>
+                
+     
+                </div>
+                <!-- End Cart -->
+
+
+                <!-- Navigation -->
+                <div id="navigation">
+                    
+                    <ul>
+                        <li><a href="home.aspx" class="active">Home</a></li>
+                        <li><a href="admin/adminlogin.aspx">Admin Login</a></li>
+                        
+                        <li><a href="display_item.aspx">The Store</a></li>
+                       
+                        <li><a href="registration.aspx">Registration</a></li>
+                        <li class="dropdown">
+                                    <a class="dropbtn"  href="#" >
+                                         <i class="cart-link fa fa-user"></i>
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-content">
+                                         <%
+if(Session["user"]==null){
+                %>
+                        <li><a href="login.aspx">Login</a></li>
+
+                <%
+}
+else { 
+                %>
+                        <li><a style="color:black;" href="update_user_details.aspx">Update user details</a></li>
+                        <li><a style="color:black;" href="display_orders.aspx">My orders</a></li>
+                        <li><a style="color:black;" href="logout.aspx">Logout</a></li>
+                <%
+}
+                %>
+
+                                        
+                                    </ul>
+                                </li>
+
+               
+
+
+
+
+                    </ul>
+                </div>
+         
+
+       <div > 
+           <h1 style="color:white ;font-size:70px;font-family:Brush Script MT, Brush Script Std, cursive;margin-top:15px;">E-Shop</h1>
+
+</div>
+                <br />
+
+              
+                <!-- End Navigation -->
+            </div>
+            <!-- End Header -->
+            <!-- Main -->
+            <div id="main">
+                <div class="cl">&nbsp;</div>
+
+                <br />
+                <!-- Content -->
+                <div id="content" style="width: 740px;">     <%--division with css id style "content"--%>
+                    <div class="products">  <%--division with css class style "products"--%>
+
+                        <%--asp code for content of connected webforms in master page--%>
+                        <asp:ContentPlaceHolder ID="c1" runat="server"></asp:ContentPlaceHolder> 
+
+                    </div>  <!-- End Products -->
+                </div>  <!-- End Content -->         
+                <!-- Sidebar -->
+                <div id="sidebar">  <%--division with css id style "sidebar"--%>
+                   
+                    
+                     <!-- Search box-->
+                    <div class="box search">     <%--division with css class style "box search"--%>
+                        <h2>Search by <span></span></h2> <%--header--%>
+                        <div class="box-content">   <%--division with css id style "box-content"--%>
+                            <br />  <%--break--%>
+                            
+                            
+                            <label>Product Name</label> <%--label name for search textbox--%>
+                            <%--input field with css id "searchtextbox" and width 170 pixel--%>
+                            <input type="text" class="field"  id="searchtextbox" style="width:150px;" />
+                            
+                            <%--input button with css class "search-submit" on click search() go to function of js--%>
+                            <input type="button" class="search-submit" value="Search" onclick="search();" />
+                            
+                            <p>please enter item name inside the textbox</p>    <%--paragraph with text message--%> 
+                        
+                        </div>  <%--end of division--%>
+                    </div>  <%--end of division--%>
+                    <!-- End Search box-->
+
+            <!-- Categories -->
+             <div class="box categories">   <%--division with css class style "box categories"--%>
+               <h2>Categories <span></span></h2>    <%--header--%>
+               <div class="box-content">    <%--division with css class style "box-content"--%>
+                   <ul>
+                   
+                       <asp:DataList ID="dd" runat="server">
+                           <ItemTemplate>
+                               <li><a href="display_item.aspx?category=<%#Eval("prod_catagory") %>"> <%#Eval("prod_catagory") %></a></li>
+                           </ItemTemplate>
+                       </asp:DataList>
+                    </ul>
+
+      
+                   
+                    </div>   <%--end of division--%>
+           </div>   <!-- End Categories -->
+          
+                
+                </div>  <!-- End Sidebar -->
+                
+                <div class="cl">&nbsp;</div> <%--division with css class style "cl"--%>
+            </div>      <%--end of division--%>
+            <!-- End Main -->
+            <!-- Side Full -->
+            <div class="side-full"> <%--division with css class style "side-full"--%>
+                <!-- More Products -->
+                <div class="more-products">
+                    <div class="more-products-holder">
+                        <ul>
+                            <li><a href="#">
+                                <img src="css/images/small1.jpg" alt="" /></a></li>
+                            <li><a href="#">
+                                <img src="css/images/small2.jpg" alt="" /></a></li>
+                            <li><a href="#">
+                                <img src="css/images/small3.jpg" alt="" /></a></li>
+                            <li><a href="#">
+                                <img src="css/images/small4.jpg" alt="" /></a></li>
+                            <li><a href="#">
+                                <img src="css/images/small5.jpg" alt="" /></a></li>
+                            <li><a href="#">
+                                <img src="css/images/small6.jpg" alt="" /></a></li>
+                            <li><a href="#">
+                                <img src="css/images/small7.jpg" alt="" /></a></li>
+                            <li><a href="#">
+                                <img src="css/images/small1.jpg" alt="" /></a></li>
+                            <li><a href="#">
+                                <img src="css/images/small2.jpg" alt="" /></a></li>
+                            <li><a href="#">
+                                <img src="css/images/small3.jpg" alt="" /></a></li>
+                            <li><a href="#">
+                                <img src="css/images/small4.jpg" alt="" /></a></li>
+                            <li><a href="#">
+                                <img src="css/images/small5.jpg" alt="" /></a></li>
+                            <li><a href="#">
+                                <img src="css/images/small6.jpg" alt="" /></a></li>
+                            <li><a href="#">
+                                <img src="css/images/small7.jpg" alt="" /></a></li>
+                            <li><a href="#">
+                                <img src="css/images/small1.jpg" alt="" /></a></li>
+                            <li><a href="#">
+                                <img src="css/images/small2.jpg" alt="" /></a></li>
+                            <li><a href="#">
+                                <img src="css/images/small3.jpg" alt="" /></a></li>
+                            <li><a href="#">
+                                <img src="css/images/small4.jpg" alt="" /></a></li>
+                            <li><a href="#">
+                                <img src="css/images/small5.jpg" alt="" /></a></li>
+                            <li><a href="#">
+                                <img src="css/images/small6.jpg" alt="" /></a></li>
+                            <li class="last"><a href="#">
+                                <img src="css/images/small7.jpg" alt="" /></a></li>
+                        </ul>
+                    </div>
+                    <div class="more-nav"><a href="#" class="prev">previous</a> <a href="#" class="next">next</a> </div>
+                </div>
+                <!-- End More Products -->
+                <!-- Text Cols -->
+                <div class="cols">
+                    <div class="cl">&nbsp;</div>
+
+                    <div class="col">
+                        <h3 class="ico ico2">Contact</h3>
+
+                        <p class="more"><a href="#" class="bul">For contact information click here</a></p>
+                    </div>
+
+
+
+                    <div class="cl">&nbsp;</div>
+                </div>
+                <!-- End Text Cols -->
+            </div>
+            <!-- End Side Full -->
+            <!-- Footer -->
+            <div id="footer">
+                <p class="left"><a href="home.aspx">Home</a> <span>|</span> <a href="adminlogin.aspx">Admin Login</a> <span>|</span> <a href="#">The Store</a> <span>|</span> <a href="registration.aspx">Registration</a> <span>|</span> <a href="login.aspx">Login</a> </p>
+                <p class="right">&copy; 2017 e-Shop </p>
+            </div>
+            <!-- End Footer -->
+        </div>
+        <!-- End Shell -->
+    </form>
+
+
+    <script type="text/javascript">
+        function search() {
+            window.location = "display_item.aspx?search=" + document.getElementById("searchtextbox").value;
+
+        }
+
+    </script>
+
+</body>
+</html>
